@@ -1,4 +1,4 @@
-module github.com/Good-Will/gateway/configuration
+module github.com/Good-Will/configuration
 
 go 1.12
 
