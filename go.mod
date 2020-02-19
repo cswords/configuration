@@ -1,4 +1,4 @@
-module github.com/Good-Will/configuration
+module github.com/cswords/configuration
 
 go 1.12
 
