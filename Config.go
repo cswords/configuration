@@ -9,31 +9,31 @@ import (
 	"gopkg.in/yaml.v2"
 )
 
-// Config represent the root node of the structures
+// Config - A config represents the root node of the structures.
 type Config struct {
 	Server Server `yaml:"server"`
 }
 
-// Server TODO
+// Server - A server represents a concept like an HTTP virtual server having its own port and containing zero to multiple routing rules.
 type Server struct {
 	Port    string   `yaml:"port"`
 	Routers []Router `yaml:"routers"`
 }
 
-// Router TODO
+// Router - A router contains a prefix-defined routing rule, and underlying middlewares and handlers.
 type Router struct {
 	Prefix      string       `yaml:"prefix"`
 	Middlewares []Middleware `yaml:"middlewares"`
 	Handlers    []Handler    `yaml:"handlers"`
 }
 
-// Middleware TODO
+// Middleware - A middlware represents an HTTP middleware having a type and its own configuration.
 type Middleware struct {
 	Type   string            `yaml:"type"`
 	Config map[string]string `yaml:"config"`
 }
 
-// Handler TODO
+// Handler - A handler represents an HTTP handler listening to a path and having a type and its own configuration.
 type Handler struct {
 	Path   string            `yaml:"path"`
 	Type   string            `yaml:"type"`
@@ -50,7 +50,9 @@ func (c *Config) loadBinary(b []byte) *Config {
 	return c
 }
 
-// LoadConfig TODO
+// LoadConfig use the given loader functions to retrieve a config data.
+// Multiple loaders are tried one by one.
+// FromLocal is an example loader function.
 func LoadConfig(location string, loaders ...(func(string) []byte)) *Config {
 	c := &(Config{})
 	var b []byte
@@ -66,7 +68,7 @@ func LoadConfig(location string, loaders ...(func(string) []byte)) *Config {
 	return c.loadBinary(b)
 }
 
-// FromLocal TODO
+// FromLocal loads a configuration file on a local location into bytes.
 func FromLocal(loc string) []byte {
 
 	if !strings.HasPrefix(loc, "./") {
